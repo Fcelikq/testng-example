@@ -7,7 +7,11 @@
     <groupId>TestngExample</groupId>
     <artifactId>testng</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+<properties>
+  <sonar.projectKey>Fcelikq_TestngExample</sonar.projectKey>
+  <sonar.organization>fcelikq</sonar.organization>
+  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+</properties>
     <dependencies>
 
         <dependency>
