@@ -1,15 +1,12 @@
 package tests;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.*;
 
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class TestngExample {
@@ -20,19 +17,19 @@ public class TestngExample {
     @Parameters({ "browser" })
     public void Setup(String browser) {
         if (browser.contains("Chrome")) {
-            System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir") + "./Drivers/chromedriver.exe");
-            ChromeOptions chromeOptions = new ChromeOptions();
-            driver = new ChromeDriver(chromeOptions);
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
         }
-        if (browser.contains("Firefox")) {
-            System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "//Drivers//geckodriver.exe");
-             driver=new FirefoxDriver();
-        }
-            driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
-            driver.manage().window().maximize();
-            driver.navigate().to("https://keytorc.com");
 
+        if (browser.contains("Firefox")) {
+            WebDriverManager.firefoxdriver().setup();
+            driver = new ChromeDriver();
     }
+        driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+        driver.navigate().to("https://keytorc.com");
+    }
+
     @Test
     public void test1(){
         driver.findElement(By.xpath("//a[@href='/blog']")).click();
@@ -42,7 +39,7 @@ public class TestngExample {
     }
 
     @AfterTest()
-    public void afterTest() throws IOException {
+    public void afterTest()  {
         driver.quit();
     }
 
